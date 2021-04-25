@@ -1,0 +1,12 @@
+server:
+  port: ${GO_STORE_API_PORT:9000}
+spring:
+  data:
+    mongodb:
+      database: go-store-api
+      port: ${GO_STORE_API_DB_PORT:27017}
+      host: ${GO_STORE_API_DB_HOST:localhost}
+      username: ${GO_STORE_API_DB_USER:go-store-api-user}
+      password: ${GO_STORE_API_DB_PASS:go-store-api-pass}
+  jpa:
+    show-sql: true
