@@ -10,3 +10,5 @@ spring:
       password: ${GO_STORE_API_DB_PASS:go-store-api-pass}
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
