@@ -26,21 +26,7 @@ public class RegisterProductServiceTest {
   private RegisterProductService registerProductService;
 
   @Test
-  public void execute_whenProvideDto_withExistentName_shouldReturnFailure() {
-    final var registerProductDto = RegisterProductServiceStub.getRegisterProductDto();
-
-    doReturn(Boolean.TRUE)
-      .when(this.productStorage)
-      .existByName(registerProductDto.name);
-
-    final var productEntityOrFailure = this.registerProductService.execute(registerProductDto);
-
-    assertThat(productEntityOrFailure.isLeft()).isTrue();
-    assertThat(productEntityOrFailure.getLeft()).isInstanceOf(DuplicatedProductNameFailure.class);
-  }
-
-  @Test
-  public void execute_whenProvideDto_withInvalidData_shouldReturnFailure() {
+  public void execute_whenProvideDto_withInvalidData_shouldReturnInvalidProductDataFailure() {
     final var registerProductDto = RegisterProductServiceStub.getInvalidRegisterProductDto();
 
     doReturn(Boolean.FALSE)
@@ -57,7 +43,21 @@ public class RegisterProductServiceTest {
   }
 
   @Test
-  public void execute_whenProvideDto_withNonexistentName_and_withValidData_shouldReturnEntity() {
+  public void execute_whenProvideDto_withExistentName_shouldReturnDuplicatedProductNameFailure() {
+    final var registerProductDto = RegisterProductServiceStub.getRegisterProductDto();
+
+    doReturn(Boolean.TRUE)
+      .when(this.productStorage)
+      .existByName(registerProductDto.name);
+
+    final var productEntityOrFailure = this.registerProductService.execute(registerProductDto);
+
+    assertThat(productEntityOrFailure.isLeft()).isTrue();
+    assertThat(productEntityOrFailure.getLeft()).isInstanceOf(DuplicatedProductNameFailure.class);
+  }
+
+  @Test
+  public void execute_whenProvideDto_withNonexistentName_and_withValidData_shouldReturnProductEntity() {
     final var registerProductDto = RegisterProductServiceStub.getRegisterProductDto();
     final var registeredProductEntity = RegisterProductServiceStub.getProductEntity();
 

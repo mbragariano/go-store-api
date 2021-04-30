@@ -28,7 +28,7 @@ public class NameVoTest {
   }
 
   @Test
-  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withNameVoInstance() {
+  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withNameVo() {
     final var nameOrValidation = NameVo.create("");
 
     assertThat(nameOrValidation.isInvalid()).isTrue();

@@ -31,7 +31,7 @@ public class PriceVoTest {
   }
 
   @Test
-  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withPriceVoInstance() {
+  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withPriceVo() {
     final var nameOrValidation = PriceVo.create(new BigDecimal("0"));
 
     assertThat(nameOrValidation.isInvalid()).isTrue();

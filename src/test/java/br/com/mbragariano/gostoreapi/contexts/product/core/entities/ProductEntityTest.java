@@ -26,7 +26,7 @@ public class ProductEntityTest {
   }
 
   @Test
-  public void create_whenProvide_validValues_shouldReturnRight_withProductEntityInstance() {
+  public void create_whenProvide_validValues_shouldReturnRight_withProductEntity() {
     final var name = "Sabonete Nivea";
     final var price = new BigDecimal("10.90");
     final var description = "Novo sabonete nivea desenvolvido a base de seiva";

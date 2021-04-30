@@ -28,7 +28,7 @@ public class DescriptionVoTest {
   }
 
   @Test
-  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withNameVoInstance() {
+  public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withDescriptionVo() {
     final var descriptionOrValidation = DescriptionVo.create("");
 
     assertThat(descriptionOrValidation.isInvalid()).isTrue();
