@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      database: go-store-api-test
+      port: ${GO_STORE_API_DB_PORT_TEST:27017}
+      host: ${GO_STORE_API_DB_HOST_TEST:localhost}
+      username: ${GO_STORE_API_DB_USER_TEST:go-store-api-test-user}
+      password: ${GO_STORE_API_DB_PASS_TEST:go-store-api-test-pass}
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
