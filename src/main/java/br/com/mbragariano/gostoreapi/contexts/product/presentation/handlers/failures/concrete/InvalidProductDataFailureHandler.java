@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class InvalidProductDataFailureHandler extends RegisterProductFailureHandler {
 
   public InvalidProductDataFailureHandler(
-    @Qualifier("notFoundFailureHandler") RegisterProductFailureHandler nextFailureHandler
+    @Qualifier("unhandledFailureHandler") RegisterProductFailureHandler nextFailureHandler
   ) {
     super(nextFailureHandler);
   }
@@ -24,6 +24,8 @@ public class InvalidProductDataFailureHandler extends RegisterProductFailureHand
 
     final var failureResponse = RegisterProductPresentationMapper.mapToFailureResponse((InvalidProductDataFailure) baseFailure);
 
-    return ResponseEntity.badRequest().body(failureResponse);
+    return ResponseEntity.badRequest()
+      .headers(this.getDefaultHeaders())
+      .body(failureResponse);
   }
 }

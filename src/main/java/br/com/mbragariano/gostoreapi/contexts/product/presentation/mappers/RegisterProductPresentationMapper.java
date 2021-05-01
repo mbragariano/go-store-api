@@ -4,12 +4,17 @@ import br.com.mbragariano.gostoreapi.contexts.product.core.entities.ProductEntit
 import br.com.mbragariano.gostoreapi.contexts.product.implementation.dtos.RegisterProductDto;
 import br.com.mbragariano.gostoreapi.contexts.product.implementation.failures.concrete.DuplicatedProductNameFailure;
 import br.com.mbragariano.gostoreapi.contexts.product.implementation.failures.concrete.InvalidProductDataFailure;
+import br.com.mbragariano.gostoreapi.contexts.product.implementation.failures.contract.RegisterProductFailure;
 import br.com.mbragariano.gostoreapi.contexts.product.presentation.models.requests.RegisterProductRequest;
 import br.com.mbragariano.gostoreapi.contexts.product.presentation.models.responses.failures.InvalidProductDataResponse;
 import br.com.mbragariano.gostoreapi.contexts.product.presentation.models.responses.failures.DuplicatedProductNameResponse;
+import br.com.mbragariano.gostoreapi.contexts.product.presentation.models.responses.failures.UnhandledFailureResponse;
 import br.com.mbragariano.gostoreapi.contexts.product.presentation.models.responses.success.RegisterProductResponse;
 
 public class RegisterProductPresentationMapper {
+
+  private static final String CANNOT_HANDLE_FAILURE_MESSAGE = "Cannot handle failure";
+  private static final String CANNOT_HANDLE_FAILURE_DESCRIPTION = "There is currently no treatment for such a failure";
 
   public static RegisterProductDto mapToDto(RegisterProductRequest registerProductRequest) {
     return RegisterProductDto.builder()
@@ -45,4 +50,11 @@ public class RegisterProductPresentationMapper {
       .build();
   }
 
+  public static UnhandledFailureResponse mapToUnhandledFailureHandler(RegisterProductFailure unhandledFailure) {
+    return UnhandledFailureResponse.builder()
+      .message(CANNOT_HANDLE_FAILURE_MESSAGE)
+      .description(CANNOT_HANDLE_FAILURE_DESCRIPTION)
+      .unhandledFailure(unhandledFailure)
+      .build();
+  }
 }

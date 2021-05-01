@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class DuplicatedProductNameFailureHandler extends RegisterProductFailureHandler {
 
@@ -27,7 +25,9 @@ public class DuplicatedProductNameFailureHandler extends RegisterProductFailureH
 
     final var failureResponse = RegisterProductPresentationMapper.mapToFailureResponse((DuplicatedProductNameFailure) baseFailure);
 
-    return ResponseEntity.status(HttpStatus.CONFLICT).body(failureResponse);
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+      .headers(this.getDefaultHeaders())
+      .body(failureResponse);
   }
 
 }
