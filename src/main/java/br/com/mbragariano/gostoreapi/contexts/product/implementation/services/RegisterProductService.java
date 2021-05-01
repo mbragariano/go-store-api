@@ -8,8 +8,10 @@ import br.com.mbragariano.gostoreapi.contexts.product.implementation.failures.co
 import br.com.mbragariano.gostoreapi.contexts.product.implementation.ports.ProductStorage;
 import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RegisterProductService {
@@ -17,6 +19,8 @@ public class RegisterProductService {
   private final ProductStorage productStorage;
 
   public Either<RegisterProductFailure, ProductEntity> execute(RegisterProductDto registerProductDto) {
+    log.info("Starting product register process!");
+
     final var name = registerProductDto.name;
 
     final var entityOrValidations = ProductEntity.create(
@@ -25,13 +29,21 @@ public class RegisterProductService {
       registerProductDto.description
     );
 
-    if (entityOrValidations.isInvalid())
-      return entityOrValidations.toEither().mapLeft(InvalidProductDataFailure::new);
+    if (entityOrValidations.isInvalid()) {
+      final var validations = entityOrValidations.getError();
+
+      log.warn("Entered values are invalid: {}", validations);
+
+      return Either.left(new InvalidProductDataFailure(validations));
+    }
 
     final var existByName = this.productStorage.existByName(name);
 
-    if (existByName)
+    if (existByName) {
+      log.warn("Existent product with name {}", name);
+
       return Either.left(new DuplicatedProductNameFailure(name));
+    }
 
     final var registeredEntity = this.productStorage.register(entityOrValidations.get());
 
