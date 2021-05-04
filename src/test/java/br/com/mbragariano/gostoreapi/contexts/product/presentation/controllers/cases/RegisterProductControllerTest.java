@@ -55,7 +55,7 @@ public class RegisterProductControllerTest {
 
     this.mockMvc.perform(requestBuilder)
       .andExpect(status().isBadRequest())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE))
       .andExpect(jsonPath("$.message").value(response.message))
       .andExpect(jsonPath("$.description").value(response.description))
       .andExpect(jsonPath("$.developer_message").doesNotHaveJsonPath())
@@ -80,7 +80,7 @@ public class RegisterProductControllerTest {
 
     this.mockMvc.perform(requestBuilder)
       .andExpect(status().isConflict())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE))
       .andExpect(jsonPath("$.message").value(response.message))
       .andExpect(jsonPath("$.description").value(response.description))
       .andExpect(jsonPath("$.developer_message").doesNotHaveJsonPath())
