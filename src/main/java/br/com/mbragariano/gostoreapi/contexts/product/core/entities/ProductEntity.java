@@ -4,12 +4,12 @@ import br.com.mbragariano.gostoreapi.commons.core.entity.BaseEntity;
 import br.com.mbragariano.gostoreapi.contexts.product.core.vos.DescriptionVo;
 import br.com.mbragariano.gostoreapi.contexts.product.core.vos.NameVo;
 import br.com.mbragariano.gostoreapi.contexts.product.core.vos.PriceVo;
+import io.vavr.Value;
 import io.vavr.control.Validation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 @ToString
@@ -52,29 +52,12 @@ public class ProductEntity extends BaseEntity {
     final BigDecimal price,
     final String description
   ) {
-    final var allValidations = new java.util.ArrayList<String>(Collections.emptyList());
-
-    final var nameOrValidations = NameVo.create(name);
-    final var priceOrValidations = PriceVo.create(price);
-    final var descriptionOrValidations = DescriptionVo.create(description);
-
-    if (nameOrValidations.isInvalid())
-      allValidations.add(nameOrValidations.getError());
-
-    if (priceOrValidations.isInvalid())
-      allValidations.add(priceOrValidations.getError());
-
-    if (descriptionOrValidations.isInvalid())
-      allValidations.add(descriptionOrValidations.getError());
-
-    if (!allValidations.isEmpty())
-      return Validation.invalid(allValidations);
-
-    final var nameVo = nameOrValidations.get();
-    final var priceVo = priceOrValidations.get();
-    final var descriptionVo = descriptionOrValidations.get();
-
-    return Validation.valid(new ProductEntity(null, nameVo, priceVo, descriptionVo));
+    return NameVo.create(name)
+      .combine(PriceVo.create(price))
+      .combine(DescriptionVo.create(description))
+      .ap((nameVo, priceVo, descriptionVo) ->
+        new ProductEntity(null, nameVo, priceVo, descriptionVo))
+      .mapError(Value::toJavaList);
   }
 
 }
