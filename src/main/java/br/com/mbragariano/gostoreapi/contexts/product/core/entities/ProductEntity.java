@@ -1,9 +1,9 @@
 package br.com.mbragariano.gostoreapi.contexts.product.core.entities;
 
 import br.com.mbragariano.gostoreapi.commons.core.entity.BaseEntity;
-import br.com.mbragariano.gostoreapi.contexts.product.core.vos.DescriptionVo;
-import br.com.mbragariano.gostoreapi.contexts.product.core.vos.NameVo;
-import br.com.mbragariano.gostoreapi.contexts.product.core.vos.PriceVo;
+import br.com.mbragariano.gostoreapi.contexts.product.core.vos.ProductDescriptionVo;
+import br.com.mbragariano.gostoreapi.contexts.product.core.vos.ProductNameVo;
+import br.com.mbragariano.gostoreapi.contexts.product.core.vos.ProductPriceVo;
 import io.vavr.Value;
 import io.vavr.control.Validation;
 import lombok.EqualsAndHashCode;
@@ -16,17 +16,17 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ProductEntity extends BaseEntity {
 
-  private final NameVo name;
+  private final ProductNameVo name;
 
-  private final PriceVo price;
+  private final ProductPriceVo price;
 
-  private final DescriptionVo description;
+  private final ProductDescriptionVo description;
 
   public ProductEntity(
     final String id,
-    final NameVo name,
-    final PriceVo price,
-    final DescriptionVo description
+    final ProductNameVo name,
+    final ProductPriceVo price,
+    final ProductDescriptionVo description
   ) {
     super(id);
 
@@ -52,11 +52,11 @@ public class ProductEntity extends BaseEntity {
     final BigDecimal price,
     final String description
   ) {
-    return NameVo.create(name)
-      .combine(PriceVo.create(price))
-      .combine(DescriptionVo.create(description))
-      .ap((nameVo, priceVo, descriptionVo) ->
-        new ProductEntity(null, nameVo, priceVo, descriptionVo))
+    return ProductNameVo.create(name)
+      .combine(ProductPriceVo.create(price))
+      .combine(ProductDescriptionVo.create(description))
+      .ap((productNameVo, priceVo, productDescriptionVo) ->
+        new ProductEntity(null, productNameVo, priceVo, productDescriptionVo))
       .mapError(Value::toJavaList);
   }
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class NameVoTest {
+public class ProductNameVoTest {
 
   private static final String NAME_VALUE = "Sabonete Nivea";
 
@@ -13,7 +13,7 @@ public class NameVoTest {
 
   @Test
   public void create_whenProvide_nullString_shouldReturnLeft_withValidationMessage() {
-    final var nameOrValidation = NameVo.create(NAME_VALUE);
+    final var nameOrValidation = ProductNameVo.create(NAME_VALUE);
 
     assertThat(nameOrValidation.isValid()).isTrue();
     assertThat(nameOrValidation.get().getValue()).isEqualTo(NAME_VALUE);
@@ -21,7 +21,7 @@ public class NameVoTest {
 
   @Test
   public void create_whenProvide_blankString_shouldReturnLeft_withValidationMessage() {
-    final var nameOrValidation = NameVo.create(null);
+    final var nameOrValidation = ProductNameVo.create(null);
 
     assertThat(nameOrValidation.isInvalid()).isTrue();
     assertThat(nameOrValidation.getError()).isEqualTo(FIRST_VALIDATION_MESSAGE);
@@ -29,7 +29,7 @@ public class NameVoTest {
 
   @Test
   public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withNameVo() {
-    final var nameOrValidation = NameVo.create("");
+    final var nameOrValidation = ProductNameVo.create("");
 
     assertThat(nameOrValidation.isInvalid()).isTrue();
     assertThat(nameOrValidation.getError()).isEqualTo(SECOND_VALIDATION_MESSAGE);

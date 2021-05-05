@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class DescriptionVoTest {
+public class ProductDescriptionVoTest {
 
   private static final String DESCRIPTION_VALUE = "Novo sabonete nivea desenvolvido a base de seiva";
 
@@ -13,7 +13,7 @@ public class DescriptionVoTest {
 
   @Test
   public void create_whenProvide_nullString_shouldReturnLeft_withValidationMessage() {
-    final var descriptionOrValidation = DescriptionVo.create(DESCRIPTION_VALUE);
+    final var descriptionOrValidation = ProductDescriptionVo.create(DESCRIPTION_VALUE);
 
     assertThat(descriptionOrValidation.isValid()).isTrue();
     assertThat(descriptionOrValidation.get().getValue()).isEqualTo(DESCRIPTION_VALUE);
@@ -21,7 +21,7 @@ public class DescriptionVoTest {
 
   @Test
   public void create_whenProvide_blankString_shouldReturnLeft_withValidationMessage() {
-    final var descriptionOrValidation = DescriptionVo.create(null);
+    final var descriptionOrValidation = ProductDescriptionVo.create(null);
 
     assertThat(descriptionOrValidation.isInvalid()).isTrue();
     assertThat(descriptionOrValidation.getError()).isEqualTo(FIRST_VALIDATION_MESSAGE);
@@ -29,7 +29,7 @@ public class DescriptionVoTest {
 
   @Test
   public void create_whenProvide_nonBlankString_and_nonNullString_shouldReturnRight_withDescriptionVo() {
-    final var descriptionOrValidation = DescriptionVo.create("");
+    final var descriptionOrValidation = ProductDescriptionVo.create("");
 
     assertThat(descriptionOrValidation.isInvalid()).isTrue();
     assertThat(descriptionOrValidation.getError()).isEqualTo(SECOND_VALIDATION_MESSAGE);
